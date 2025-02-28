@@ -15,6 +15,7 @@ import med.voll.api.endereco.Endereco;
 public class Paciente {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    private Boolean ativo;
     private String nome;
     private String email;
     private String cpf;
@@ -22,10 +23,25 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
     public Paciente(DadosCadastroPaciente dados){
+        this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.cpf = dados.cpf();
         this.telefone = dados.telefone();
         this.endereco = new Endereco(dados.endereco());
+    }
+    public void atualizarInformacoes(DadosAtualizacaoPaciente dados) {
+        if (dados.nome() != null)
+            this.nome = dados.nome();
+
+        if (dados.telefone() != null)
+            this.telefone = dados.telefone();
+
+        if (dados.endereco() != null)
+            endereco.atualizarInformacoes(dados.endereco());
+    }
+
+    public void inativar() {
+        this.ativo = false;
     }
 }
