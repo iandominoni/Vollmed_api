@@ -41,8 +41,6 @@ public class MedicoController {
         var medico = repository.getReferenceById(dados.id());
         medico.atualizarInformacoes(dados);
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
-
-
     }
     @DeleteMapping("/{id}")
     @Transactional
